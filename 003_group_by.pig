@@ -5,13 +5,12 @@ source_events = LOAD '/user/data/*.export.CSV' USING PigStorage('\t') AS (GLOBAL
 filtered_events_date_country_grouped = GROUP source_events BY (ActionGeo_CountryCode);
 
 -- Create aggregated calculations and project by the grouped field
-output_filtered_events_date_country_grouped = FOREACH filtered_events_date_country_grouped GENERATE group.SQLDATE as date,group.ActionGeo_CountryCode as country,COUNT(filtered_events),SUM(filtered_events.NumSources) as num_sources,SUM(filtered_events.NumArticles) as num_articles,AVG(filtered_events.AvgTone) as avg_tone;
+output_filtered_events_date_country_grouped = FOREACH filtered_events_date_country_grouped GENERATE group.ActionGeo_CountryCode as country,COUNT(filtered_events),SUM(filtered_events.NumSources) as num_sources,SUM(filtered_events.NumArticles) as num_articles,AVG(filtered_events.AvgTone) as avg_tone;
 
--- Order the output by Country, Date
-output_filtered_events_date_country_grouped_ordered = ORDER output_filtered_events_date_country_grouped by country asc, date desc ;
-
+-- Order by number of articles
 ordered = ORDER output_filtered_events_date_country_grouped_ordered BY num_articles desc;
 
+-- Pick only top 10
 limitd = limit ordered 10; 
 
 -- Create the projections
