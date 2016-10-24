@@ -10,7 +10,7 @@ limited = LIMIT tokenized_underscore 10;
 grouped = GROUP tokenized_underscore by word;
 
 -- Count the words
-counted = FOREACH grouped GENERATE group,count(tokenized_underscore.GLOBALEVENTID);
+counted = FOREACH grouped GENERATE group,COUNT(tokenized_underscore.GLOBALEVENTID);
 
 limited = LIMIT counted 10;
 
