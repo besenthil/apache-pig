@@ -4,7 +4,7 @@ source_events = LOAD '/user/data/*.export.CSV' USING PigStorage('\t') AS (GLOBAL
 -- Tokenize the URL
 tokenized = FOREACH source_events generate GLOBALEVENTID, FLATTEN(STRPLIT(SOURCEURL,'-',10000)) as word;
 
-limited = LIMIT tokenized by 10;
+limited = LIMIT tokenized 10;
 
 -- dump
 DUMP limited;
