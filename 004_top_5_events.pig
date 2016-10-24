@@ -7,11 +7,12 @@ tokenized_underscore = FOREACH source_events generate GLOBALEVENTID, FLATTEN(STR
 -- Tokenize the URL
 tokenized_slash = FOREACH tokenized_underscore generate GLOBALEVENTID, FLATTEN(STRSPLIT(word,'/',10000)) as word;
 
+limited = LIMIT tokenized_slash 10;
 -- Group the words
 --grouped = GROUP tokenized_slash by word;
 
 -- dump
-DUMP tokenized_slash;
+DUMP limited;
 
 -- Store the output into HDFS
 --STORE output_final INTO '/user/data/FINAL_OUTPUT.CSV';
