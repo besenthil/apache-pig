@@ -7,7 +7,12 @@ tokenized_underscore = FOREACH source_events generate GLOBALEVENTID, SOURCEURL,F
 limited = LIMIT tokenized_underscore 10;
 
 -- Group the words
---grouped = GROUP tokenized_underscore by word;
+grouped = GROUP tokenized_underscore by word;
+
+-- Count the words
+counted = FOREACH grouped GENERATE group,count(tokenized_underscore.GLOBALEVENTID);
+
+limited = LIMIT counted 10;
 
 -- dump
 DUMP limited;
