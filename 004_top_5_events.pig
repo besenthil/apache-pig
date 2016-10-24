@@ -12,10 +12,10 @@ grouped = GROUP tokenized_underscore by word;
 -- Count the words
 counted = FOREACH grouped GENERATE group,COUNT(tokenized_underscore.GLOBALEVENTID);
 
-limited = LIMIT counted 10;
+--limited = LIMIT counted 10;
 
 -- dump
-DUMP limited;
+--DUMP limited;
 
 -- Store the output into HDFS
---STORE output_final INTO '/user/data/FINAL_OUTPUT.CSV';
+STORE counted INTO '/user/data/popular_words_in_october.CSV';
