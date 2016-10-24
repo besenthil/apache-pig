@@ -5,7 +5,7 @@ source_events = LOAD '/user/data/*.export.CSV' USING PigStorage('\t') AS (GLOBAL
 tokenized_underscore = FOREACH source_events generate GLOBALEVENTID, FLATTEN(STRSPLIT(SOURCEURL,'-',10000)) as word;
 
 -- Tokenize the URL
-tokenized_slash = FOREACH tokenized generate GLOBALEVENTID, FLATTEN(STRSPLIT(word,'/',10000)) as word;
+tokenized_slash = FOREACH tokenized_underscore generate GLOBALEVENTID, FLATTEN(STRSPLIT(word,'/',10000)) as word;
 
 -- Group the words
 --grouped = GROUP tokenized_slash by word;
