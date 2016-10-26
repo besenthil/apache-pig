@@ -17,7 +17,7 @@ ordered = ORDER counted by event_count DESC;
 limited = LIMIT ordered 10;
 
 -- dump
-DUMP ordered;
+DUMP limited;
 
 -- Store the output into HDFS
 --STORE ordered INTO '/user/data/popular_domains_in_gdelt.CSV';
