@@ -6,15 +6,15 @@ tokenized_underscore = FOREACH source_events generate GLOBALEVENTID, SOURCEURL a
 INDEXOF(SOURCEURL, '/',INDEXOF(SOURCEURL, '//',0)+2)) as domain_name;
 
 -- Group the words
-grouped = GROUP tokenized_underscore by domain_name parallel 50;
+grouped = GROUP tokenized_underscore by domain_name;
 
 -- Count the words
 counted = FOREACH grouped GENERATE group,COUNT(tokenized_underscore.GLOBALEVENTID) as event_count;
 
 -- Order by the # of events
-ordered = ORDER counted by event_count DESC parallel 50;
+ordered = ORDER counted by event_count DESC;
 
-limited = LIMIT ordered 10 parallel 50;
+limited = LIMIT ordered 10;
 
 -- dump
 DUMP limited;
